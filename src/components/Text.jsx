@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSizes.body,
     fontFamily: theme.fonts.main,
     fontWeight: theme.fontWeights.normal,
+    textAlign: theme.textAlign.left,
   },
   colorTextSecondary: {
     color: theme.colors.textSecondary,
@@ -23,10 +24,13 @@ const styles = StyleSheet.create({
   },
   colorTextMenu: {
     color: theme.colors.textMenu
+  },
+  textAlignCenter: {
+    textAlign: theme.textAlign.center
   }
 });
 
-const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
+const Text = ({ color, fontSize, fontWeight, textAlign, style, ...props }) => {
   const textStyle = [
     styles.text,
     color === 'textSecondary' && styles.colorTextSecondary,
@@ -34,6 +38,7 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     color === 'textMenu' && styles.colorTextMenu,
     fontSize === 'subheading' && styles.fontSizeSubheading,
     fontWeight === 'bold' && styles.fontWeightBold,
+    textAlign === 'center' && styles.textAlignCenter,
     style,
   ];
 

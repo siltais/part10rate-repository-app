@@ -1,18 +1,23 @@
-import { View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import theme from '../theme';
+import RepositoryItemStats from './RepositoryItemStats';
+import RepositoryItemHeader from './RepositoryItemHeader';
+
+const styles = StyleSheet.create({
+  itemContainer: {
+    backgroundColor: theme.colors.textMenu,
+    padding: 25
+  }
+});
 
 const RepositoryItem = (props) => {
-    return (
-      <View>
-        <Text>Full name: {props.item.fullName}</Text>
-        <Text>Description: {props.item.description}</Text>
-        <Text>Language: {props.item.language}</Text>
-        <Text>Stars: {props.item.stargazersCount}</Text>
-        <Text>Forks: {props.item.forksCount}</Text>
-        <Text>Reviews: {props.item.reviewCount}</Text>
-        <Text>Rating: {props.item.ratingAverage}</Text>
-      </View>
-    );
-  };
+  return (
+    <View style={styles.itemContainer}>
+      <RepositoryItemHeader item={props.item}/>
+      <RepositoryItemStats item={props.item}/>
+    </View>
+  );
+};
 
 export default RepositoryItem;
 
