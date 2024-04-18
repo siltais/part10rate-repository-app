@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
 const AppBar = () => {
   return( 
     <View style={styles.container}>
-      <AppBatTab tabText = "Repositories"/>
+      <AppBatTab tabText = "Repositories" navigateTo="/"/>
+      <AppBatTab tabText = "Sign In" navigateTo="/signin"/>
     </View>
   );
 };
