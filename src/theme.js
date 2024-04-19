@@ -5,7 +5,8 @@ const theme = {
       primary: '#0366d6',
       appBarBackGround: '#24292e',
       textMenu: '#ffffff',
-      seperatorColor: '#e1e4e8'
+      seperatorColor: '#e1e4e8',
+      errorColor: '#d73a4a'
     },
     fontSizes: {
       body: 14,
