@@ -1,7 +1,12 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Pressable, Text } from 'react-native';
+import TabText from './Text';
 import Constants from 'expo-constants';
 import theme from '../theme';
 import AppBatTab from './AppBarTab';
+
+import { useQuery } from '@apollo/client'
+import { ME } from '../graphql/queries'
+import useSignOut from '../hooks/useSignOut';
 
 
 const styles = StyleSheet.create({
@@ -21,11 +26,38 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  const [signOut] = useSignOut();
+  const meResult = useQuery(ME)
+  if(meResult.loading){
+    return '';
+  }
+
+  const handleSignOut = () => {
+    signOut();
+  }
+
+  const chkLogin = () => {
+    if( !meResult.data.me ){
+      return <AppBatTab tabText = "Sign In" navigateTo="/signin" />
+    } else {
+      return(
+        <Pressable onPress={() => handleSignOut()}>
+          <Text>
+            <TabText color="textMenu" fontWeight="bold">
+              Sign Out
+            </TabText>
+          </Text>
+        </Pressable>
+      );
+    }
+  }
+
+
   return( 
     <View style={styles.container}>
       <ScrollView horizontal contentContainerStyle={styles.tabScroll}>
         <AppBatTab tabText = "Repositories" navigateTo="/"/>
-        <AppBatTab tabText = "Sign In" navigateTo="/signin"/>
+        {chkLogin()}
       </ScrollView>
     </View>
   );
