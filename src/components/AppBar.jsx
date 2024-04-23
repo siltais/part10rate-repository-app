@@ -2,7 +2,7 @@ import { View, StyleSheet, ScrollView, Pressable, Text } from 'react-native';
 import TabText from './Text';
 import Constants from 'expo-constants';
 import theme from '../theme';
-import AppBatTab from './AppBarTab';
+import AppBarTab from './AppBarTab';
 
 import { useQuery } from '@apollo/client'
 import { ME } from '../graphql/queries'
@@ -38,7 +38,7 @@ const AppBar = () => {
 
   const chkLogin = () => {
     if( !meResult.data.me ){
-      return <AppBatTab tabText = "Sign In" navigateTo="/signin" />
+      return <AppBarTab tabText = "Sign In" navigateTo="/signin" />
     } else {
       return(
         <Pressable onPress={() => handleSignOut()}>
@@ -56,7 +56,7 @@ const AppBar = () => {
   return( 
     <View style={styles.container}>
       <ScrollView horizontal contentContainerStyle={styles.tabScroll}>
-        <AppBatTab tabText = "Repositories" navigateTo="/"/>
+        <AppBarTab tabText = "Repositories" navigateTo="/"/>
         {chkLogin()}
       </ScrollView>
     </View>
