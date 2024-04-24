@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-import { REPOSITORY_DETAILS } from './fragments';
+import { REPOSITORY_DETAILS, REVIEW_DETAILS } from './fragments';
 
 export const ALL_REPOSITORIES = gql`
   query {
@@ -30,3 +30,11 @@ export const SINGLE_REPOSITORY = gql`
   }
   ${REPOSITORY_DETAILS}
 ` 
+export const REPOSITORY_REVIEWS = gql`
+  query reviews($id: ID!) {
+    repository(id: $id) {
+      ...ReviewDetails
+    }
+  }
+  ${REVIEW_DETAILS}
+`

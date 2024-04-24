@@ -14,3 +14,24 @@ export const REPOSITORY_DETAILS = gql`
     stargazersCount
   }
 `;
+
+export const REVIEW_DETAILS = gql`
+  fragment ReviewDetails on Repository {
+    id
+    fullName
+    reviews {
+      edges {
+        node {
+          id
+          text
+          rating
+          createdAt
+          user {
+            id
+            username
+          }
+        }
+      }
+    }
+  }
+`;
