@@ -42,7 +42,7 @@ const RepositoryList = () => {
 
   const navigate = useNavigate();
   const singleRepository = (item) => {
-    navigate(item.id);
+    navigate(`/repository/${item.id}`);
   }
 
   return <RepositoryListContainer singleRepository={singleRepository} repositories={repositories} />;
