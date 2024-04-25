@@ -41,7 +41,12 @@ const AppBar = () => {
 
   const chkLogin = () => {
     if( !meResult.data.me ){
-      return <AppBarTab tabText = "Sign In" navigateTo="/signin" />
+      return (
+        <>
+          <AppBarTab tabText = "Sign in" navigateTo="/signin" />
+          <AppBarTab tabText = "Sign up" navigateTo="/signup" />
+        </>
+      );
     } else {
       return(
         <>
