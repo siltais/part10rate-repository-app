@@ -1,7 +1,15 @@
-import { FlatList, View, StyleSheet, SafeAreaView, Pressable } from 'react-native';
+import { 
+  FlatList, 
+  View, 
+  StyleSheet, 
+  SafeAreaView, 
+  Pressable 
+} from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from 'react-router-native';
+import SortBar from './SortBar';
+import { useState } from 'react';
 
 const styles = StyleSheet.create({
   separator: {
@@ -12,13 +20,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export const RepositoryListContainer = ({ repositories, singleRepository }) => {
- 
+export const RepositoryListContainer = ({ 
+  repositories, 
+  singleRepository,
+  orderList, 
+  setOrderList 
+}) => {
 
   const repositoryNodes = repositories
   ? repositories.edges.map(edge => edge.node)
   : [];
-
 
   return (
     <SafeAreaView style={styles.listContainer}>
@@ -31,6 +42,14 @@ export const RepositoryListContainer = ({ repositories, singleRepository }) => {
           </Pressable>
         }
         keyExtractor={item => item.id}
+        ListHeaderComponent={
+          () => (
+            <SortBar 
+              orderList={orderList} 
+              setOrderList={setOrderList}
+            />
+          )
+        }
       />
     </SafeAreaView>
   );
@@ -38,14 +57,23 @@ export const RepositoryListContainer = ({ repositories, singleRepository }) => {
 
 const ItemSeparator = () => <View style={styles.separator} />;
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
+  const [orderList, setOrderList] = useState(["CREATED_AT", "DESC", "Latest repositories"]);
+
+  const { repositories } = useRepositories([`${orderList[0]}`,`${orderList[1]}`]);
 
   const navigate = useNavigate();
   const singleRepository = (item) => {
     navigate(`/repository/${item.id}`);
   }
 
-  return <RepositoryListContainer singleRepository={singleRepository} repositories={repositories} />;
+  return (
+    <RepositoryListContainer
+      orderList={orderList} 
+      setOrderList={setOrderList} 
+      singleRepository={singleRepository} 
+      repositories={repositories} 
+    />
+  );
 };
 
 export default RepositoryList;

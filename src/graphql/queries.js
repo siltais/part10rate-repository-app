@@ -38,3 +38,16 @@ export const REPOSITORY_REVIEWS = gql`
   }
   ${REVIEW_DETAILS}
 `
+
+export const ALL_REPOSITORIES_SORTED = gql`
+  query repositories($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection) {
+    repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
+      edges {
+        node {
+          ...RepositoryDetails
+        }
+      }
+    }
+  }
+  ${REPOSITORY_DETAILS}
+`
