@@ -1,39 +1,57 @@
 import * as React from 'react';
 import { List } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
+  head: {
+    backgroundColor: theme.colors.seperatorColor,
+    padding: 20,
+  },
   menuItem: {
     flexGrow: 1,
     flexShrink: 1,
     backgroundColor: '#f5f6f7',
+    marginLeft: 20,
+    marginRight: 20,
   },
   menuTitle: {
     flexGrow: 1,
     flexShrink: 1,
     backgroundColor: '#f5f6f7',
     color: 'gray',
-    textAlign: 'center'   
+    textAlign: 'center',
+    marginLeft: 20,
+    marginRight: 20
   },
 });
 
-const SortBar = ({ orderList, setOrderList }) => {
+const SortBar = ({ orderList, setOrderList, setUsedSearch }) => {
   
   const [expanded, setExpanded] = React.useState(false);
-
   const handlePress = () => setExpanded(!expanded);
+
+  const sortTtile = orderList ? orderList[2] : "";
 
   const handleSorting = (option) => {
     setExpanded(false);
-    setOrderList([`${option.orderBy}`, `${option.orderDirection}`, `${option.title}`]);
+    const newSort = [
+      `${option.orderBy}`, 
+      `${option.orderDirection}`, 
+      `${option.title}`, 
+      orderList[3]
+    ];
+    setUsedSearch(false);
+    setOrderList(newSort);
   }
 
   return (
     <List.Section>
       <List.Accordion
+        style = {styles.head}
         expanded={expanded}
         onPress={() => handlePress()}
-        title={orderList[2]}
+        title={sortTtile}
         left={props => <List.Icon {...props} icon="sort" />}>
         <List.Item 
           titleStyle={styles.menuTitle} 

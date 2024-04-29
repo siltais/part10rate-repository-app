@@ -9,6 +9,7 @@ import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from 'react-router-native';
 import SortBar from './SortBar';
+import FilterBar from './FilterBar';
 import { useState } from 'react';
 
 const styles = StyleSheet.create({
@@ -24,8 +25,11 @@ export const RepositoryListContainer = ({
   repositories, 
   singleRepository,
   orderList, 
-  setOrderList 
+  setOrderList,
+  usedSearch,
+  setUsedSearch 
 }) => {
+  
 
   const repositoryNodes = repositories
   ? repositories.edges.map(edge => edge.node)
@@ -43,11 +47,19 @@ export const RepositoryListContainer = ({
         }
         keyExtractor={item => item.id}
         ListHeaderComponent={
-          () => (
+          () => (<>
+            <FilterBar 
+              orderList={orderList} 
+              setOrderList={setOrderList}
+              usedSearch={usedSearch}
+              setUsedSearch={setUsedSearch}
+            />
             <SortBar 
               orderList={orderList} 
               setOrderList={setOrderList}
+              setUsedSearch={setUsedSearch}
             />
+            </>
           )
         }
       />
@@ -57,9 +69,18 @@ export const RepositoryListContainer = ({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 const RepositoryList = () => {
-  const [orderList, setOrderList] = useState(["CREATED_AT", "DESC", "Latest repositories"]);
+  const [usedSearch, setUsedSearch] = useState(false);
+  const [orderList, setOrderList] = useState(
+    ["CREATED_AT", "DESC", "Latest repositories", ""]
+  );
 
-  const { repositories } = useRepositories([`${orderList[0]}`,`${orderList[1]}`]);
+  const { repositories } = useRepositories(
+    [
+      `${orderList[0]}`,
+      `${orderList[1]}`,
+      `${orderList[3]}`
+    ]
+  );
 
   const navigate = useNavigate();
   const singleRepository = (item) => {
@@ -68,6 +89,8 @@ const RepositoryList = () => {
 
   return (
     <RepositoryListContainer
+      usedSearch={usedSearch}
+      setUsedSearch={setUsedSearch}
       orderList={orderList} 
       setOrderList={setOrderList} 
       singleRepository={singleRepository} 

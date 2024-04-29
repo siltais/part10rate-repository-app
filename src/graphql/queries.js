@@ -40,8 +40,8 @@ export const REPOSITORY_REVIEWS = gql`
 `
 
 export const ALL_REPOSITORIES_SORTED = gql`
-  query repositories($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection) {
-    repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
+  query repositories($searchKeyword: String!, $orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection) {
+    repositories(searchKeyword: $searchKeyword, orderBy: $orderBy, orderDirection: $orderDirection) {
       edges {
         node {
           ...RepositoryDetails
