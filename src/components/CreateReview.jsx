@@ -105,6 +105,7 @@ export const CreateReviewForm = ({ onSubmit, msg }) => {
         value={formik.values.text}
         onChangeText={formik.handleChange('text')}
         placeholderTextColor="gray"
+        multiline={true}
       />
       <Pressable onPress={formik.handleSubmit} style={ () => styles.submit } >
         <Text textAlign="center" fontWeight="bold" color="textMenu">Create a review</Text>
