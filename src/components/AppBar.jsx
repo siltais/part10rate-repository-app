@@ -51,6 +51,7 @@ const AppBar = () => {
       return(
         <>
           <AppBarTab tabText = "Create a review" navigateTo="/createReview"/>
+          <AppBarTab tabText = "My reviews" navigateTo="/myReviews"/>
           <Pressable onPress={() => handleSignOut()}>
             <Text>
               <TabText color="textMenu" fontWeight="bold">
