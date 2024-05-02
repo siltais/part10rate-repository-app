@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
 });
 
 export const RepositoryListContainer = ({ 
-  repositories, 
+  repositories,
+  onEndReach, 
   singleRepository,
   orderList, 
   setOrderList,
@@ -62,6 +63,8 @@ export const RepositoryListContainer = ({
             </>
           )
         }
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     </SafeAreaView>
   );
@@ -74,13 +77,20 @@ const RepositoryList = () => {
     ["CREATED_AT", "DESC", "Latest repositories", ""]
   );
 
-  const { repositories } = useRepositories(
+  const { repositories, fetchMore, loading } = useRepositories(
     [
       `${orderList[0]}`,
       `${orderList[1]}`,
       `${orderList[3]}`
-    ]
+    ],
+    {first: 10}
   );
+
+  const onEndReach = () => {
+    if(loading === false){
+      fetchMore();
+    }   
+  };
 
   const navigate = useNavigate();
   const singleRepository = (item) => {
@@ -94,7 +104,8 @@ const RepositoryList = () => {
       orderList={orderList} 
       setOrderList={setOrderList} 
       singleRepository={singleRepository} 
-      repositories={repositories} 
+      repositories={repositories}
+      onEndReach={onEndReach} 
     />
   );
 };

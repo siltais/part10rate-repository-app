@@ -73,7 +73,7 @@ const ReviewItem = ({ review }) => {
   );
 }
 
-const ReviewContainer = ({reviews, repository}) => {
+const ReviewContainer = ({reviews, repository, onEndReach}) => {
   
   const reviewNodes = reviews
     ? reviews.edges.map(edge => edge.node)
@@ -89,6 +89,8 @@ const ReviewContainer = ({reviews, repository}) => {
         renderItem={({ item }) => <ReviewItem review={item} />}
         keyExtractor={({ id }) => id}
         ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     </SafeAreaView>
   );
@@ -98,10 +100,17 @@ const SingleRepository = () => {
 
   let { repositoryId } = useParams();
 
-  const { reviews } = useReviews(repositoryId);
+  const { reviews, fetchMore, loading } = useReviews(repositoryId, {first: 7});
   const { repository } = useRepository(repositoryId);
+
+  const onEndReach = () => {
+    if(loading === false){
+      console.log("call");
+      fetchMore();
+    }   
+  };
  
-  return <ReviewContainer repository={repository} reviews={reviews} />
+  return <ReviewContainer repository={repository} reviews={reviews} onEndReach={onEndReach}  />
 
 };
 
